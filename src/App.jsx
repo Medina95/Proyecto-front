@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import D3Visualization from './D3Visualization';
 import {Face} from "./components/Face";
+import {Chart} from "./components/Chart";
+
 
 
   export function App() {
@@ -38,11 +40,12 @@ import {Face} from "./components/Face";
 
           </div>
 
-
           <div className="App">
-        <h1>D3.js Pie Chart y Word Cloud</h1>
-        <D3Visualization />
-      </div>
+            <h1>D3.js Pie Chart y Word Cloud</h1>
+            <D3Visualization />
+          </div>
+
+          <Chart />
 
         </div>
       </>
