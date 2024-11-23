@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import D3Visualization from './D3Visualization';
+import D3Visualization from './components/D3Visualization';
 import {Face} from "./components/Face";
 import {Chart} from "./components/Chart";
 
@@ -11,7 +11,7 @@ import {Chart} from "./components/Chart";
     const [porcentages, setPorcentages]  = useState([]);
 
     useEffect(() => {
-      const apiUrl = "http://localhost:8080/api/v1/reviews/porcentajes";
+      const apiUrl = "http://localhost:5000/api/v1/reviews/porcentajes";
 
       const fetchPorcetages = async () => {
         try {
@@ -33,19 +33,25 @@ import {Chart} from "./components/Chart";
     return (
       <>
         <div className="App">
-          <h1>Caritas con porcentaje</h1>
+          <h1 className="page-title">
+            <span>📊 Reseñas Con Inteligencia Artificial</span>
+            <br/>
+            <span className="highlight">y Análisis de Sentimientos</span>
+          </h1>
+
           <div className="caritas-container">
-            <Face porcentage={porcentages[1]} name={"carita feliz"} mood={"carita-mouth happy-mouth"} color={'green'}/>
-            <Face porcentage={porcentages[2]} name={"carita sad"} mood={"carita-mouth sad-mouth"} color={'red'}/>
+            <Face porcentage={porcentages[1]} name={"carita feliz"} mood={"carita-mouth happy-mouth"} color={'#A8E6CF'}/>
+            <h1> EL total de reseñas fueron: {porcentages[0]}</h1>
+            <Face porcentage={porcentages[2]} name={"carita sad"} mood={"carita-mouth sad-mouth"} color={'#FF8C8C'}/>
 
           </div>
 
           <div className="App">
-            <h1>D3.js Pie Chart y Word Cloud</h1>
-            <D3Visualization />
+            <div className="visualization-container">
+              <D3Visualization/>
+              <Chart/>
+            </div>
           </div>
-
-          <Chart />
 
         </div>
       </>

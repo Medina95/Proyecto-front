@@ -1,11 +1,44 @@
 .App {
   text-align: center;
+  align-content: space-between;
 }
+.page-title {
+  font-size: 2.75rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin: 20px 0;
+  line-height: 1.3;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.page-title span {
+  display: inline; /* Asegura que los elementos estén en la misma línea */
+}
+
+.highlight {
+  color: #007BFF;
+  font-size: 3rem;
+  background: linear-gradient(90deg, #007BFF, #00BFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+
 
 .caritas-container {
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
+}
+.visualization-container {
+  display: flex; /* Activa el modo flexbox /
+  justify-content: space-between; / Espaciado uniforme entre los elementos /
+  align-items: center; / Alineación vertical /
+  gap: 16px; / Espaciado opcional entre los elementos */
 }
 
 .carita {
@@ -95,4 +128,52 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
+
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.container {
+  display: grid;
+  grid-template-areas:
+    "title title title"
+    "emoji-left chart emoji-right"
+    "wordcloud wordcloud wordcloud";
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  align-items: center;
+  margin: 20px;
+}
+
+.title {
+  grid-area: title;
+  margin-top: 20px;
+}
+
+.emoji {
+  width: 100px;
+  height: auto;
+}
+
+.chart {
+  grid-area: chart;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.wordcloud {
+  grid-area: wordcloud;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 

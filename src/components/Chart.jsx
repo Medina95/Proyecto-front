@@ -24,8 +24,8 @@ export const Chart = ( {}) => {
     });
 
     return (
-        <div>
-            <Bar data={chartData} />
+        <div style={{ width: '600px', height: '450px' }}  className="chart">
+            <Bar data={chartData} options={{responsive: true, maintainAspectRatio: false}}/>
         </div>
     );
 };

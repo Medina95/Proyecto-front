@@ -8,10 +8,14 @@ const D3Visualization = () => {
     const words = [
       { text: "carolina", frequency: 50 },
       { text: "juan", frequency: 30 },
-      { text: "chiristian", frequency: 20 },
+      { text: "christian", frequency: 20 },
       { text: "emotion", frequency: 40 },
       { text: "troste", frequency: 100 },
-      { text: "feli", frequency: 60 }
+      { text: "feli", frequency: 60 },
+      { text: "nose", frequency: 20 },
+      { text: "espero", frequency: 70 },
+      { text: "haberte", frequency: 100 },
+      { text: "ayudado", frequency: 90 }
     ];
 
     dataViz_wordcloud(words); // Llamamos la función de WordCloud con las palabras
