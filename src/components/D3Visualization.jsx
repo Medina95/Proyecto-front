@@ -24,7 +24,7 @@ const D3Visualization = () => {
     function dataViz_wordcloud(data) {
       const wordScale = d3.scaleLinear().domain([0, 100]).range([10, 50]); // Tamaños de palabras más pequeños
 
-      const keywords = ["chiristian", "emotion", "troste", "feli"]; // Palabras clave a resaltar
+      const keywords = ["christian", "emotion", "troste", "feli"]; // Palabras clave a resaltar
 
       cloud()
         .size([400, 400]) // Tamaño reducido del área de la nube
