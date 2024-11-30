@@ -24,6 +24,7 @@
   background: linear-gradient(90deg, #007BFF, #00BFFF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
 }
 
 
@@ -174,6 +175,86 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.title {
+  font-size: 48px;
+  font-weight: 600;
+  color: 'white';
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+
+
+  text-shadow:
+          2px 2px 0 #000,
+          -2px -2px 0 #000,
+          2px -2px 0 #000,
+          -2px 2px 0 #000;
+
+  letter-spacing: 1px;  /* Espaciado entre letras */
+}
+.green-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #28a745;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+
+
+  text-shadow:
+          2px 2px 0 #000,
+          -2px -2px 0 #000,
+          2px -2px 0 #000,
+          -2px 2px 0 #000;
+
+  letter-spacing: 1px;
+}
+
+button {
+  background-color: #16632C;  /* Color verde */
+  color: white;  /* Texto en blanco */
+  border: none;  /* Eliminar borde predeterminado */
+  padding: 10px 20px;  /* Espaciado interno */
+  font-size: 16px;  /* Tamaño de la fuente */
+  font-weight: bold;  /* Negrita en el texto */
+  border-radius: 25px;  /* Bordes redondeados */
+  cursor: pointer;  /* Puntero de mano */
+  transition: all 0.3s ease;  /* Transición suave al pasar el mouse */
+}
+
+/* Estilo para el botón cuando el mouse pasa por encima */
+button:hover {
+  background-color: #218838;  /* Color verde más oscuro al pasar el mouse */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);  /* Sombra suave para el efecto de hover */
+}
+
+/* Estilo para el campo de texto */
+input[type="text"] {
+  width: 70%;  /* Ocupa todo el ancho disponible */
+  padding: 10px;  /* Espaciado interno */
+  font-size: 16px;  /* Tamaño de la fuente */
+  font-weight: 400;  /* Peso de la fuente */
+  color: #333;  /* Color del texto */
+  background-color: #f0f0f0;  /* Fondo claro */
+  border: 2px solid #ccc;  /* Borde gris claro */
+  border-radius: 10px;  /* Bordes redondeados */
+  transition: all 0.3s ease;  /* Transición suave para cambios */
+}
+
+/* Estilo cuando el campo de texto está enfocado (focus) */
+input[type="text"]:focus {
+  border-color: #28a745;  /* Borde verde cuando está enfocado */
+  background-color: #e7f9e7;  /* Fondo verde muy claro */
+  box-shadow: 0px 0px 10px rgba(40, 167, 69, 0.2);  /* Sombra verde suave */
+  outline: none;  /* Eliminar el borde por defecto */
+}
+
+/* Estilo cuando el campo de texto está vacío y el usuario no ha escrito nada */
+input[type="text"]:placeholder-shown {
+  color: #aaa;  /* Texto del placeholder en gris */
 }
 
 
