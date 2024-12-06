@@ -1,14 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import D3Visualization from './components/D3Visualization';
 import { Face } from "./components/Face";
 import { Chart } from "./components/Chart";
 import { DataImport } from "./components/DataImport";
+import { ClipLoader } from "react-spinners";
+import { Table } from "./components/Table";
+import {WordCloudComponent} from "./components/WordCloudComponent";
+import PieChartComponent from "./components/PieChartComponent";
 
 export function App() {
   const [file, setFile] = useState(null);
   const [porcentages, setPorcentages] = useState([]);
   const [shouldShowContent, setShouldContent] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [color, setColor] = useState("#cd6155");
+  const stopWords = [
+    'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself',
+    'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this',
+    'that', 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing',
+    'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between',
+    'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again',
+    'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some',
+    'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now', 'd', 'll',
+    'm', 'o', 're', 've', 'y', 'ain', 'aren', 'couldn', 'didn', 'doesn', 'hadn', 'hasn', 'haven', 'isn', 'ma', 'mightn', 'mustn', 'needn', 'shan',
+    'shouldn', 'wasn', 'weren', 'won', 'wouldn'
+  ];
+  function getWordFrequency(texts) {
+    const wordCount = {};
+
+    texts.forEach((text) => {
+      const words = text.toLowerCase().match(/\w+('\w+)?/g);
+
+      if (words) {
+        words.forEach((word) => {
+          if (!stopWords.includes(word)) {
+            wordCount[word] = (wordCount[word] || 0) + 1;
+          }
+        });
+      }
+    });
+
+    return wordCount;
+  }
 
   useEffect(() => {
     const apiUrl = "http://localhost:8000/api/v1/reviews/uploadDataFrame";
@@ -32,6 +65,7 @@ export function App() {
         const data = await response.json();
 
         // Procesamiento de la data recibida
+        const text = data.map(row => row['Text']);
         const predictedClasses = data.map(row => row['Predicted Class']);
         const ratings = data.map(row => row['Rating']);
         const probabilities = data.map(row => row['Probability']);
@@ -42,15 +76,31 @@ export function App() {
         const negativeReviews = predictedClasses.filter(c => c === 'Negativo').length;
         const neutralReviews = predictedClasses.filter(c => c === 'Neutro').length;
 
-        const positivePercentage = (positiveReviews / totalReviews) * 100;
-        const negativePercentage = (negativeReviews / totalReviews) * 100;
-        const neutralPercentage = (neutralReviews / totalReviews) * 100;
+
+        const positivePercentage = Math.round((positiveReviews / totalReviews) * 100);
+        const negativePercentage = Math.round((negativeReviews / totalReviews) * 100);
+        const neutralPercentage = Math.round((neutralReviews / totalReviews) * 100);
+
+        // filtrar los textos de la reviews
+        const textpositiveReviews = text.filter((text, index) => predictedClasses[index] === 'Positivo');
+        const textnegativeReviews = text.filter((text, index) => predictedClasses[index] === 'Negativo');
+        const textneutralReviews = text.filter((text, index) => predictedClasses[index] === 'Neutro');
+
+        const positiveWordFrequency = getWordFrequency(textpositiveReviews);
+        const negativeWordFrequency = getWordFrequency(textnegativeReviews);
+        const neutralWordFrequency = getWordFrequency(textneutralReviews);
 
         // Promedio de calificaciones y probabilidades
         const averageRating = ratings.reduce((acc, curr) => acc + curr, 0) / ratings.length;
         const averageProbability = probabilities.reduce((acc, curr) => acc + curr, 0) / probabilities.length;
 
         setPorcentages({
+          positiveWordFrequency,
+          negativeWordFrequency,
+          neutralWordFrequency,
+          positiveReviews,
+          negativeReviews,
+          neutralReviews,
           totalReviews,
           positivePercentage,
           negativePercentage,
@@ -59,8 +109,13 @@ export function App() {
           averageProbability
         });
 
+        setLoading(false);
+
+
       } catch (error) {
         console.log(error);
+        setLoading(false);
+
       }
     };
 
@@ -86,46 +141,115 @@ export function App() {
                 <span className="highlight">y Análisis de Sentimientos</span>
               </h1>
 
-              <div className="caritas-container">
-                <Face
-                    porcentage={porcentages.positivePercentage}
-                    name={"carita feliz"}
-                    mood={"carita-mouth happy-mouth"}
-                    color={'#A8E6CF'}
-                />
+              {loading ? (
+                  <ClipLoader
+                      color={color}
+                      loading={loading}
+                      size={150}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                  />
+              ) : (
+                  <>
+                    <div className="caritas-container">
+                      <Face
+                          porcentage={porcentages.positivePercentage}
+                          name={"carita feliz"}
+                          mood={"carita-mouth happy-mouth"}
+                          color={"#A8E6CF"}
+                      />
 
-                <Face
-                    porcentage={porcentages.neutralPercentage}
-                    name={"carita neutral"}
-                    mood={"carita-mouth neutral-mouth"}
-                    color={'gray'}
-                />
+                      <Face
+                          porcentage={porcentages.neutralPercentage}
+                          name={"carita neutral"}
+                          mood={"carita-mouth neutral-mouth"}
+                          color={"gray"}
+                      />
 
-                <Face
-                    porcentage={porcentages.negativePercentage}
-                    name={"carita sad"}
-                    mood={"carita-mouth sad-mouth"}
-                    color={'#FF8C8C'}
-                />
-              </div>
+                      <Face
+                          porcentage={porcentages.negativePercentage}
+                          name={"carita sad"}
+                          mood={"carita-mouth sad-mouth"}
+                          color={"#FF8C8C"}
+                      />
+                    </div>
 
-              <div>
-                <h1>EL total de reseñas fueron: {porcentages.totalReviews}</h1>
-                <h2>Promedio de Calificación: {porcentages.averageRating}</h2>
-                <h2>Promedio de Probabilidad: {porcentages.averageProbability}</h2>
-                <h2> {console.log(porcentages)}</h2>
-              </div>
+                    <div>
+                      <h1>El total de reseñas fueron: {porcentages.totalReviews}</h1>
+                    </div>
 
-              <div className="App">
-                <div className="visualization-container">
-                  <D3Visualization data={porcentages}/>
-                  <Chart data={porcentages}/>
-                </div>
-              </div>
+                    <div className="visualization-container" style={{
+                      display: 'flex',
+                      justifyContent: 'space-around',  // Alinea los elementos con espacio entre ellos
+                      alignItems: 'flex-start', // Alinea verticalmente en la parte superior
+                      flexWrap: 'nowrap', // Evita que los elementos se envuelvan
+                    }}>
+                      {/* Visualización Gráfico */}
+                      <div style={{flex: '1 1 30%', padding: '10px'}}>
+                        <h1> Emociones vs Ranting </h1>
+                        <Chart data={porcentages}/>
+                      </div>
+
+                      {/* Tabla de emociones y Gráfico Circular */}
+                      <div >
+                        <h1>Tabla de emociones</h1>
+                        <Table
+                            positiveReviews={porcentages.positiveReviews}
+                            negativeReviews={porcentages.negativeReviews}
+                            neutralReviews={porcentages.neutralReviews}
+                        />
+
+                      </div>
+                      <PieChartComponent
+                          positiveReviews={porcentages.positivePercentage}
+                          negativeReviews={porcentages.negativePercentage}
+                          neutralReviews={porcentages.neutralPercentage}
+                      />
+                    </div>
+
+                    <div style={{display: 'flex', justifyContent: 'space-around', gap: '20px'}}>
+                      <div style={{flex: 1, textAlign: 'center'}}>
+                        <h1>Nube de Palabras - Positivas</h1>
+                        <WordCloudComponent
+                            wordFrequency={porcentages.positiveWordFrequency}
+                            id="word-cloud-positive"
+                        />
+                      </div>
+                      <div style={{flex: 1, textAlign: 'center'}}>
+                        <h1>Nube de Palabras - Neutras</h1>
+                        <WordCloudComponent
+                            wordFrequency={porcentages.neutralWordFrequency}
+                            id="word-cloud-neutral"
+                        />
+                      </div>
+                      <div style={{flex: 1, textAlign: 'center'}}>
+                        <h1>Nube de Palabras - Negativas</h1>
+                        <WordCloudComponent
+                            wordFrequency={porcentages.negativeWordFrequency}
+                            id="word-cloud-negative"
+                        />
+                      </div>
+
+
+                    </div>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      flexDirection: 'column',
+                      alignItems: 'center'
+                    }}>
+                    </div>
+                  </>
+              )}
             </>
-        ) : (
-            <p></p>
-        )}
+            )
+            :
+            (
+                <p></p>
+            )
+        }
       </div>
-  );
+  )
+      ;
+
 }
