@@ -26,7 +26,7 @@ export function App() {
     'm', 'o', 're', 've', 'y', 'ain', 'aren', 'couldn', 'didn', 'doesn', 'hadn', 'hasn', 'haven', 'isn', 'ma', 'mightn', 'mustn', 'needn', 'shan',
     'shouldn', 'wasn', 'weren', 'won', 'wouldn'
   ];
-  function getWordFrequency(texts, maxWords = 50) {
+  function getWordFrequency(texts, maxWords = 100) {
     const wordCount = {};
     let totalWords = 0;
 
