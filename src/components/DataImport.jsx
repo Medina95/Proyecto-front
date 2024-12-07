@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
+import {setSelectionRange} from "@testing-library/user-event/dist/utils";
 
-export const DataImport = ( {file, setFile,shouldShowContent, setShouldShowContent }) => {
+export const DataImport = ( {file, setFile,nameColumns,setNameColumns, shouldShowContent, setShouldShowContent, uploadFileAndFetchPercentages }) => {
 
     const [reviewText, setReviewText] = useState('');
     const [prediction, setPrediction] = useState('');
     const [error, setError] = useState('');
+    const [rating, setRating] = useState('')
+    const [text, setText] = useState('')
 
+
+    const handleInputChange = (index, value) => {
+        const updatedColumns = [...nameColumns];
+        updatedColumns[index] = value;
+        setNameColumns(updatedColumns);
+    };
+
+    const handleRatingChange = (e) => {
+        setRating(e.target.value);
+    }
+    const handleReviewsChange = (e) => {
+        setText(e.target.value);
+    }
     const handleFileChange = (event) => {
         let selectedFile = event.target.files[0];
         if (selectedFile.type !== "text/csv") {
@@ -20,7 +36,7 @@ export const DataImport = ( {file, setFile,shouldShowContent, setShouldShowConte
     }
     const handleTextChange = (e) => {
         setReviewText(e.target.value);
-    };
+    }
     const handleAnalyzeClick = async () => {
         try {
             const response = await fetch('http://localhost:8000/api/v1/reviews/predict', {
@@ -47,12 +63,14 @@ export const DataImport = ( {file, setFile,shouldShowContent, setShouldShowConte
     };
 
 
-    const handleUpload = () => {
-        if (!file ) {
-            alert("Primero selecciona un archivo para analizar.");
+    const handleUpload =  () => {
+        if (!file || !nameColumns) {
+            alert("Verifique el archivo o los nombres de las columnas e intente nuevamente .");
             return;
         }
         setShouldShowContent(true);
+        uploadFileAndFetchPercentages();
+
     }
 
     return (
@@ -78,6 +96,17 @@ export const DataImport = ( {file, setFile,shouldShowContent, setShouldShowConte
                             backgroundColor: 'white',
                             cursor: 'pointer',
                         }}
+                    />
+                    <input
+                        type="text"
+                        value={nameColumns[0]}
+                        onChange={(e) => handleInputChange(0, e.target.value)}
+
+                    />
+                    <input
+                        type="text"
+                        value={nameColumns[1]}
+                        onChange={(e) => handleInputChange(1, e.target.value)}
                     />
                     <button onClick={handleUpload}>Subir y analizar</button>
                 </div>
