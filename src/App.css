@@ -1,4 +1,11 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 .App {
+  min-height: 100%;
   text-align: center;
   align-content: space-between;
 }
@@ -36,10 +43,10 @@
   margin-top: 20px;
 }
 .visualization-container {
-  display: flex; /* Activa el modo flexbox /
-  justify-content: space-between; / Espaciado uniforme entre los elementos /
-  align-items: center; / Alineación vertical /
-  gap: 16px; / Espaciado opcional entre los elementos */
+  display: flex;
+  justify-content: flex-start;  /* Alinea los elementos al principio */
+  align-items: center;
+  gap: 70px;  /* Espaciado entre los elementos */
 }
 
 .carita {
@@ -321,4 +328,15 @@ tr:nth-child(odd):not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) {
 
 h1 {
   white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+
+
+.background-image {
+  background-image: url('/public/pastel2.jpg');
+  background-size: cover; /* Mantiene el tamaño original de la imagen */
+  background-repeat: repeat; /* Repite la imagen solo verticalmente */
+  background-position: top center; /* Centra horizontalmente y empieza desde arriba */
+  height: 100%; /* Altura de la ventana */
+  width: 100%; /* Ancho completo */
 }

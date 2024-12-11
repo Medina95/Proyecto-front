@@ -103,10 +103,7 @@ export function App() {
 
       const neutralrating = countEmotionOccurrences(ratings, predictedClasses, uniqueRatings, "Neutro");
 
-      console.log("Unique Ratings:", uniqueRatings);
-      console.log("Positive Ratings Count:", positiveRatingsCount);
-      console.log("Negative Ratings Count:", negativeRatingsCount);
-      console.log("neutral Ratings Count:", neutralrating);
+
 
       // Calcular los porcentajes de cada clase de sentimiento
       const totalReviews = data.length;
@@ -156,13 +153,12 @@ export function App() {
 
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };
 
   return (
-      <div className="App">
+      <div className={`App ${shouldShowContent ? 'background-image' : ''}`}>
         {!shouldShowContent && (
             <DataImport
                 file={file}
@@ -243,6 +239,7 @@ export function App() {
 
                       </div>
                       <PieChartComponent
+
                           positiveReviews={porcentages.positivePercentage}
                           negativeReviews={porcentages.negativePercentage}
                           neutralReviews={porcentages.neutralPercentage}

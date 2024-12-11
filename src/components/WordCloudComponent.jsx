@@ -8,7 +8,6 @@ export const WordCloudComponent = ({ wordFrequency, id }) => {
             return;
         }
 
-        console.log('Generando la nube de palabras con:', wordFrequency);
 
         const words = Object.keys(wordFrequency).map((word) => ({
             text: word,

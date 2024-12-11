@@ -16,24 +16,10 @@ export const DataImport = ( {file, setFile,nameColumns,setNameColumns, shouldSho
         setNameColumns(updatedColumns);
     };
 
-    const handleRatingChange = (e) => {
-        setRating(e.target.value);
-    }
-    const handleReviewsChange = (e) => {
-        setText(e.target.value);
-    }
     const handleFileChange = (event) => {
-        let selectedFile = event.target.files[0];
-        if (selectedFile.type !== "text/csv") {
-            alert("Solo se permiten archivos .csv. Porfavor seleccione uno valido");
-            setFile(selectedFile)
-            return;
-        }
-
-        setFile(selectedFile); // Guardar el archivo en el estado del componente padre.
-        console.log("Archivo seleccionado:", selectedFile.name);
-
-    }
+        const file = event.target.files[0];
+        setFile(file);
+    };
     const handleTextChange = (e) => {
         setReviewText(e.target.value);
     }
@@ -68,6 +54,11 @@ export const DataImport = ( {file, setFile,nameColumns,setNameColumns, shouldSho
             alert("Verifique el archivo o los nombres de las columnas e intente nuevamente .");
             return;
         }
+
+        if (!file.name.endsWith(".csv")) {
+            alert("El archivo debe ser un archivo .csv. Seleccione un archivo válido.");
+            return;
+        }
         setShouldShowContent(true);
         uploadFileAndFetchPercentages();
 
@@ -85,6 +76,7 @@ export const DataImport = ( {file, setFile,nameColumns,setNameColumns, shouldSho
                 <div style={{flex: 1, marginRight: '20px'}}>
                     <h1 className="green-title">Subir y Analizar CSV</h1>
                     <input
+                        id={"file-selected"}
                         type="file"
                         accept=".csv"
                         onChange={handleFileChange}
