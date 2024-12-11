@@ -12,8 +12,8 @@ const PieChartComponent = ({ positiveReviews, negativeReviews, neutralReviews })
         datasets: [
             {
                 data: [positiveReviews, negativeReviews, neutralReviews], // Los valores de las emociones
-                backgroundColor: ['#36A2EB', '#FF6384', '#FFCD56'], // Colores para cada sección
-                hoverBackgroundColor: ['#5A9BD5', '#FF8F8A', '#FFD166'], // Colores al pasar el ratón
+                backgroundColor: ['#A8E6CF', '#FF6384', 'rgba(169, 169, 169, 0.5)'], // Colores para cada sección
+                hoverBackgroundColor: ['rgba(75, 192, 192, 0.5)', '#FF6384', 'rgba(169, 169, 169, 0.5)'], // Colores al pasar el ratón
             },
         ],
     };

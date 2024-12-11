@@ -88,6 +88,26 @@ export function App() {
       const ratings = data.map((row) => row["Rating"]);
       const probabilities = data.map((row) => row["Probability"]);
 
+      // valores del rating
+      const uniqueRatings = [...new Set(ratings)].sort((a, b) => a - b);
+      function countEmotionOccurrences(ratings, predictedClasses, uniqueRatings, emotion) {
+        return uniqueRatings.map((rating) => {
+          // Contamos las veces que el rating aparece con la emoción
+          const count = ratings.filter((r, index) => r === rating && predictedClasses[index] === emotion).length;
+          return count;
+        });
+      }
+      const positiveRatingsCount = countEmotionOccurrences(ratings, predictedClasses, uniqueRatings, "Positivo");
+      const negativeArray = countEmotionOccurrences(ratings, predictedClasses, uniqueRatings, "Negativo");
+      const negativeRatingsCount = negativeArray.map(num => -num);
+
+      const neutralrating = countEmotionOccurrences(ratings, predictedClasses, uniqueRatings, "Neutro");
+
+      console.log("Unique Ratings:", uniqueRatings);
+      console.log("Positive Ratings Count:", positiveRatingsCount);
+      console.log("Negative Ratings Count:", negativeRatingsCount);
+      console.log("neutral Ratings Count:", neutralrating);
+
       // Calcular los porcentajes de cada clase de sentimiento
       const totalReviews = data.length;
       const positiveReviews = predictedClasses.filter((c) => c === "Positivo").length;
@@ -97,6 +117,7 @@ export function App() {
       const positivePercentage = Math.round((positiveReviews / totalReviews) * 100);
       const negativePercentage = Math.round((negativeReviews / totalReviews) * 100);
       const neutralPercentage = Math.round((neutralReviews / totalReviews) * 100);
+
 
       // Filtrar los textos de las reviews
       const textpositiveReviews = text.filter((text, index) => predictedClasses[index] === "Positivo");
@@ -110,8 +131,15 @@ export function App() {
       // Promedio de calificaciones y probabilidades
       const averageRating = ratings.reduce((acc, curr) => acc + curr, 0) / ratings.length;
       const averageProbability = probabilities.reduce((acc, curr) => acc + curr, 0) / probabilities.length;
+    // Crear arrays de ratings positivos y negativos
+
 
       setPorcentages({
+        neutralrating,
+
+        uniqueRatings,
+        negativeRatingsCount,
+        positiveRatingsCount,
         positiveWordFrequency,
         negativeWordFrequency,
         neutralWordFrequency,
@@ -184,7 +212,7 @@ export function App() {
                           porcentage={porcentages.negativePercentage}
                           name={"carita sad"}
                           mood={"carita-mouth sad-mouth"}
-                          color={"#FF8C8C"}
+                          color={"#FF6384"}
                       />
                     </div>
 
@@ -201,7 +229,7 @@ export function App() {
                       {/* Visualización Gráfico */}
                       <div style={{flex: '1 1 30%', padding: '10px'}}>
                         <h1> Emociones vs Ranting </h1>
-                        <Chart data={porcentages}/>
+                        <Chart labels={porcentages.uniqueRatings} dataset1Data={porcentages.positiveRatingsCount} dataset2Data={porcentages.negativeRatingsCount} dataset3Data={porcentages.neutralrating}/>
                       </div>
 
                       {/* Tabla de emociones y Gráfico Circular */}

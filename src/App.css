@@ -272,7 +272,7 @@ input[type="text"]:placeholder-shown {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 /* Estilo para las celdas y bordes */
@@ -284,15 +284,23 @@ th, td {
 
 /* Encabezados de la tabla */
 th {
-  background-color: #4CAF50;
+  background-color: #050c06;
   color: white;
   font-size: 16px;
   font-weight: 600;
 }
 
 /* Fila de la tabla */
-tr:nth-child(even) {
-  background-color: #f9f9f9; /* Fondo gris claro para filas pares */
+tr:nth-child(1) {
+  background-color: #A8E6CF; /* Verde clarito para la primera fila */
+}
+
+tr:nth-child(2) {
+  background-color: #FF6384; /* Gris claro para la segunda fila */
+}
+
+tr:nth-child(3) {
+  background-color: gray; /* Rojo clarito para la tercera fila */
 }
 
 /* Estilo al pasar el ratón por encima de las filas */
@@ -301,13 +309,15 @@ tr:hover {
   cursor: pointer;
 }
 
-tr:first-child {
-  background-color: #eaf0e3;
+/* Opcional: Si tienes más de 3 filas, puedes mantener el estilo alternado para las filas adicionales */
+tr:nth-child(even):not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) {
+  background-color: #f9f9f9; /* Gris claro para las filas pares a partir de la cuarta */
 }
 
-tr:last-child {
-  background-color: #eaf0e3;
+tr:nth-child(odd):not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) {
+  background-color: #ffffff; /* Blanco para las filas impares a partir de la cuarta */
 }
+
 
 h1 {
   white-space: nowrap; /* Evita que el texto se divida en varias líneas */
