@@ -46,7 +46,7 @@ html, body {
   display: flex;
   justify-content: flex-start;  /* Alinea los elementos al principio */
   align-items: center;
-  gap: 70px;  /* Espaciado entre los elementos */
+  gap: 50px;  /* Espaciado entre los elementos */
 }
 
 .carita {
@@ -188,7 +188,7 @@ body {
 .title {
   font-size: 48px;
   font-weight: 600;
-  color: 'white';
+  color: white;
   text-align: center;
   margin-bottom: 20px;
   font-family: 'Roboto', sans-serif;
@@ -327,10 +327,33 @@ tr:nth-child(odd):not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) {
 
 
 h1 {
+  font-size: 1.75rem; /* Tamaño moderado */
+  font-weight: 600; /* Menos grueso que bold */
+  text-align: center;
+
+  margin: 15px 0; /* Espaciado más sutil */
+  line-height: 1.2; /* Relación entre líneas más compacta */
+  font-family: 'Montserrat', sans-serif; /* Fuente moderna y empresarial */
+  text-transform: uppercase; /* Mantener mayúsculas para impacto */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Menos sombra */
+  color: #565960; /* Gris oscuro para un tono profesional */
+
   white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 
+
+ .titulo-grafica {
+   font-size: 1.75rem; /* Tamaño moderado */
+   font-weight: 600; /* Menos grueso que bold */
+   text-align: center;
+   color: #333; /* Gris oscuro profesional */
+   margin: 15px 0; /* Espaciado más sutil */
+   line-height: 1.2; /* Relación entre líneas más compacta */
+   font-family: 'Montserrat', sans-serif; /* Fuente moderna y empresarial */
+   text-transform: uppercase; /* Mantener mayúsculas para impacto */
+   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Menos sombra */
+ }
 
 .background-image {
   background-image: url('/public/pastel2.jpg');

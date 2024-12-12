@@ -91,12 +91,14 @@ export const DataImport = ( {file, setFile,nameColumns,setNameColumns, shouldSho
                     />
                     <input
                         type="text"
+                        placeholder="Ingresa el nombre de la columna de reviews"
                         value={nameColumns[0]}
                         onChange={(e) => handleInputChange(0, e.target.value)}
 
                     />
                     <input
                         type="text"
+                        placeholder="Ingresa el nombre de la columna de ratings"
                         value={nameColumns[1]}
                         onChange={(e) => handleInputChange(1, e.target.value)}
                     />

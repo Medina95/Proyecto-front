@@ -213,7 +213,7 @@ export function App() {
                     </div>
 
                     <div>
-                      <h1>El total de reseñas fueron: {porcentages.totalReviews}</h1>
+                      <h1 class="titulo-grafica" >Número total de reseñas: {porcentages.totalReviews}</h1>
                     </div>
 
                     <div className="visualization-container" style={{
