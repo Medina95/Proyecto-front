@@ -25,7 +25,7 @@ export const DataImport = ( {file, setFile,nameColumns,setNameColumns, shouldSho
     }
     const handleAnalyzeClick = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/v1/reviews/predict', {
+            const response = await fetch('http://23.22.31.145:8000/api/v1/reviews/predict', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
