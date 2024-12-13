@@ -58,7 +58,7 @@ export function App() {
 
 
   const uploadFileAndFetchPercentages = async () => {
-      const apiUrl = "https://54.221.124.200:8000/api/v1/reviews/uploadDataFrame";
+      const apiUrl = "https://reviewai.duckdns.org/api/v1/reviews/uploadDataFrame";
 
       if (!file || !nameColumns) {
       alert("Verifique el archivo o los nombres de las columnas e intente nuevamente.");
